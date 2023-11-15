@@ -5,6 +5,7 @@ sealed class StatusApplication {
     object NoConnect : StatusApplication()
 
     class Web (
-        val url: String
+        val url: String,
+        val orientation: String
     ): StatusApplication()
 }

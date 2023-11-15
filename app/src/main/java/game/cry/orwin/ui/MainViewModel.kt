@@ -37,6 +37,7 @@ class MainViewModel @Inject constructor(
                 }
                 is Success -> {
                     val url = result.data?.appConfig?.showedIconPrimary
+                    val orientation = result.data?.appConfig?.namePrimary
                     if (url==null) {
                         _state.value.copy(
                             statusApplication = NoConnect
@@ -44,7 +45,9 @@ class MainViewModel @Inject constructor(
                             .updateStateUI()
                     } else {
                         _state.value.copy(
-                            statusApplication = Web(url =url)
+                            statusApplication = Web(
+                                url =url,
+                                orientation = orientation?: "1")
                         )
                             .updateStateUI()
                     }
