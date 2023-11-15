@@ -24,7 +24,7 @@ fun Sample(
         is Web -> {
             SetScreenOrientation(
                 activity = activity,
-                orientation = "0"
+                orientation = currentState.orientation
             )
             WebViewScreen(url = currentState.url)
         }
