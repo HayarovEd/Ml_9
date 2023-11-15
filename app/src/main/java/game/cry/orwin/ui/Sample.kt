@@ -22,9 +22,10 @@ fun Sample(
         }
 
         is Web -> {
+            if (currentState.stateOrientation !is StateOrientation.Auto)
             SetScreenOrientation(
                 activity = activity,
-                orientation = currentState.orientation
+                stateOrientation = currentState.stateOrientation
             )
             WebViewScreen(url = currentState.url)
         }
@@ -34,10 +35,10 @@ fun Sample(
 @Composable
 fun SetScreenOrientation(
     activity: ComponentActivity,
-    orientation: String) {
-    when (orientation) {
-        "1" -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        "0" -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+    stateOrientation: StateOrientation) {
+    when (stateOrientation) {
+        StateOrientation.Vertical  -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        StateOrientation.Horizontal -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         else -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
    /* if (orientation=="1") {

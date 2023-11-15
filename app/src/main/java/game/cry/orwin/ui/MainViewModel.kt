@@ -1,5 +1,6 @@
 package game.cry.orwin.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,19 +36,24 @@ class MainViewModel @Inject constructor(
                     )
                         .updateStateUI()
                 }
+
                 is Success -> {
                     val url = result.data?.appConfig?.showedIconPrimary
                     val orientation = result.data?.appConfig?.namePrimary
-                    if (url==null) {
+                    if (url == null) {
                         _state.value.copy(
                             statusApplication = NoConnect
                         )
                             .updateStateUI()
                     } else {
+                        Log.d("ASDFG", "ort - $orientation")
                         _state.value.copy(
                             statusApplication = Web(
-                                url =url,
-                                orientation = orientation?: "1")
+                                url = url,
+                                stateOrientation = setStateOrientation(
+                                    orientation
+                                )
+                            )
                         )
                             .updateStateUI()
                     }
@@ -60,6 +66,15 @@ class MainViewModel @Inject constructor(
     private fun MainState.updateStateUI() {
         _state.update {
             this
+        }
+    }
+
+    private fun setStateOrientation(stringState: String?): StateOrientation {
+        return when (stringState) {
+            "2" -> StateOrientation.Horizontal
+            "1" -> StateOrientation.Vertical
+            "3" -> StateOrientation.Auto
+            else -> StateOrientation.Vertical
         }
     }
 }
